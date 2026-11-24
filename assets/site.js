@@ -49,3 +49,18 @@ window.addEventListener('scroll', () => {
   });
 }, {passive: true});
 updateCurrentSection();
+
+const counter = document.querySelector('.page-views');
+if (counter && location.origin === 'https://kgongzju.github.io' && location.pathname.startsWith('/personal-web/')) {
+  const badge = new Image();
+  badge.referrerPolicy = 'no-referrer';
+  badge.alt = counter.textContent;
+  const badgeUrl = new URL(counter.href);
+  badgeUrl.pathname = badgeUrl.pathname.replace(/\/$/, '.svg');
+  badgeUrl.search = new URLSearchParams({
+    label: counter.dataset.label, style: 'flat-square', labelColor: '536675', color: '395a70'
+  });
+  badge.onload = () => counter.replaceChildren(badge);
+  counter.hidden = false;
+  badge.src = badgeUrl.href;
+}
